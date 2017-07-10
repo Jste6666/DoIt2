@@ -13,8 +13,6 @@ class CompleteTaskViewController: UIViewController {
     @IBOutlet weak var taskLabel: UILabel!
     
     var task = Task()
-    
-    var previousVC = TasksViewController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
