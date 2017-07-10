@@ -20,12 +20,13 @@ class TasksViewController: UIViewController, UITableViewDelegate, UITableViewDat
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        
-        
         tableView.dataSource = self
         tableView.delegate = self
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        getTasks()
+    }
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -59,7 +60,15 @@ class TasksViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func getTasks() {
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         
+        do {
+            tasks = try context.fetch(Task.fetchRequest()) as! [Task]
+            print(tasks)
+        } catch {
+           print("OOPS")
+        }
+    
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
