@@ -20,9 +20,9 @@ class CompleteTaskViewController: UIViewController {
         super.viewDidLoad()
 
         if task.important {
-            taskLabel.text = "❗️\(task.name)"
+            taskLabel.text = "❗️\(task.name!)"
         } else {
-            taskLabel.text = task.name
+            taskLabel.text = task.name!
         }
         
         
@@ -31,10 +31,10 @@ class CompleteTaskViewController: UIViewController {
     
     
     @IBAction func completeTapped(_ sender: Any) {
-        previousVC.tasks.remove(at: previousVC.selectedIndex)
-        previousVC.tableView.reloadData()
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        context.delete(task)
         navigationController!.popViewController(animated: true)
-        
+        (UIApplication.shared.delegate as! AppDelegate).saveContext()
     }
 
     override func didReceiveMemoryWarning() {
